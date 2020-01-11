@@ -116,6 +116,9 @@ proc impl(n: NimNode): NimNode =
       it[i] = impl it[i]
     return n
   
+  elif n.kind == nnkDiscardStmt:
+    return n
+
   else:
     return quote:
       when isVoid `n`:
@@ -171,6 +174,7 @@ when isMainModule:
           if true: "t" else: "f"
           if false: "f"
           if true: "t"
+          discard "foo"
           divs:
             for i in 0..1:
               for j in 0..1:
